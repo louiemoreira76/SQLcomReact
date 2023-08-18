@@ -1,0 +1,39 @@
+(1)/POST /usuario/login
+
+request body
+{
+    "email": "",
+    "senha": ""
+}
+
+response 
+{
+    "id": 0,
+    "email": "",
+    "none": "",   //senha
+}
+
+(2) /POST /filme
+
+request body
+{
+    "nome": "",
+    "sinopse": "",
+    "avaliacao": "0.0",
+    "lancamento": "2020-08-01",
+    "disponivel": true,
+    "imagem": "",
+    "usuario": 0
+}
+
+response (200)
+{
+    "id": 1,
+    "nome": "",
+    "sinopse": "",
+    "avaliacao": "0.0",
+    "lancamento": "2020-08-01",
+    "disponivel": true,
+    "imagem": "",
+    "usuario": 0
+}
