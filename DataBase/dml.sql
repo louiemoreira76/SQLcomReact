@@ -15,14 +15,19 @@ AND   ds_senha	=	'1234';
 --cadastrar novo filme 
 INSERT INTO tb_filmes (id_filme, nm_filme, ds_sinopse, vl_avaliacao, dt_lancamento, bt_disponivel)
 	VALUES (1, 'Brunex O Ninja', 'O ninja TEC está com sangue nos olhos para PROGRAMAR', 9.9, '2023-08-18', true);
-    
+
+--alterar imagem do filme
+UPDATE tb_filmes
+    SET img_filme   =  '/storage/filme/adshsf.jpg'
+WHERE   id_filme = 1;
+
 --alterar filme
 UPDATE tb_filmes
     SET nm_filme = 'O Kara',
         ds_sinopse = 'Homem mais pika de todos',
         vl_avaliacao = 3.2,
         dt_lancamento = '2010/08/17',
-        bt_disponivel = false
+        bt_disponivel = true
 WHERE   id_filme = 1;
 
 --colsultar todos filmes 

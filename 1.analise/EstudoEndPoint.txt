@@ -1,19 +1,23 @@
-(1)/POST /usuario/login
+(1)/POST        /usuario/login      (/POST) = verbo corespondente ao End Point (/usuario/login) = a rota
 
-request body
+request body    (parametros = corpo)
 {
-    "email": "",
+    "email": "", (envia esse json)
     "senha": ""
 }
 
-response 
+response (200)                   (parametros = resposta)                               parametros querry rota corpo
 {
     "id": 0,
     "email": "",
     "none": "",   //senha
 }
 
-(2) /POST /filme
+
+
+//////////////////////////////////
+
+(2) /POST          /filme
 
 request body
 {
@@ -36,4 +40,20 @@ response (200)
     "disponivel": true,
     "imagem": "",
     "usuario": 0
+}
+
+
+
+///////////////////
+
+(2.1) /PUT           /filme/:id/imagem
+
+request body (form)
+{
+    "imagem": ""
+}
+
+response (204)
+{
+    --sem conteúdo
 }
