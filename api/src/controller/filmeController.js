@@ -1,7 +1,11 @@
-import { inserirFilme } from '../repository/filmeRepository.js';
+import { alterarImagem, inserirFilme } from '../repository/filmeRepository.js';
+
+import multer from 'multer';
 
 import { Router } from 'express';
+
 const server = Router();
+const upload = multer({dest: 'tools/image'}); //obejeto javasript '{}', dest é para onde vai subir os arquivos
 
 server.post('/filme', async(req, resp) => {
     try{
@@ -37,6 +41,23 @@ server.post('/filme', async(req, resp) => {
     }
 })
 
+//outro end poin,t da imagem
+server.put('/filme/:id/imagem', upload.single('capa'), async (req, resp) => {
+    try{
+        const { id } = req.params;
+        const imagem = req.file.path;    // constante para caminho da imagem
 
+        const resposta = await alterarImagem(imagem, id);
+        if(resposta != 1) // validação
+            throw new Error('A imagem não pode ser salva')
+
+        resp.status(204).send();
+    }
+    catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
 
 export default server

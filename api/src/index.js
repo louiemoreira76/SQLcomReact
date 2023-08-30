@@ -11,6 +11,9 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
+//liberar a arquivos da image
+server.use('/tools/image', express.static('tools/image'));
+
 //configuração dos end points 
 server.use(usuarioController);
 server.use(filmeController);

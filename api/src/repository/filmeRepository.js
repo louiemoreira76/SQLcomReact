@@ -9,3 +9,15 @@ export async function inserirFilme (filme){ //não nome, genero, avaliação etc
     
     return filme; //retornado todos os campos do rensposta + o id
 }     
+
+
+export async function alterarImagem(imagem, id){
+    const comando = `
+    UPDATE tb_filmes
+        SET img_filme   = ?
+        WHERE   id_filme = ?
+    `;
+    
+    const [resposta] = await conx.query(comando, [imagem, id]);
+    resposta.affectedRows // quantas linhas foram afetadas no DB, se retornar 1 certo se não errado
+}
