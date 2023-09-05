@@ -57,3 +57,56 @@ response (204)
 {
     --sem conteúdo
 }
+
+/////////////////
+
+(3) /PUT       /filme/:id
+
+request body
+{
+    "nome": "",
+    "sinopse": "",
+    "avaliacao": 0.0,
+    "lancamento": "2020-10-01"
+    "disponivel": true,
+    "imagem": "",
+    "usuario": 0
+    }
+
+response (204)
+-- sem conteúdo
+
+////////////////
+
+(4) /DELETE    /filme/:id
+
+response (204)
+
+////////////////
+
+(5) /GET           /filme
+
+response (200)
+[
+    {
+        "nome": "",
+        "avaliacao": "5.4",
+        "lancamento": "2020-10-01",
+        "disponivel": true,
+        "usuario": 0
+    }
+]
+
+//////////////////////
+
+(6) /GET         /filme/busca/?nome=xx
+
+response (200)[
+    {
+        "nome": "",
+        "avaliacao": "5.4",
+        "lancamento": "2020-10-01",
+        "disponivel": true,
+        "usuario": 0
+    }
+]

@@ -1,10 +1,9 @@
-import { alterarImagem, inserirFilme } from '../repository/filmeRepository.js';
-
-import multer from 'multer';
+import { alterarImagem, inserirFilme, listarTodosFilmes, buscarPorID, buscarPorNome } from '../repository/filmeRepository.js';
 
 import { Router } from 'express';
-
 const server = Router();
+
+import multer from 'multer';
 const upload = multer({dest: 'tools/image'}); //obejeto javasript '{}', dest é para onde vai subir os arquivos
 
 server.post('/filme', async(req, resp) => {
@@ -59,5 +58,56 @@ server.put('/filme/:id/imagem', upload.single('capa'), async (req, resp) => {
         })
     }
 })
+///////////////
+
+server.get('/filme', async (req, resp) => { 
+    try{
+        const resposta = await listarTodosFilmes();
+        resp.send(resposta);
+    }
+    catch (err){
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+
+server.get('/filme/busca', async (req, resp) => { 
+    try{
+        const { nome } = req.query;
+        const resposta = await buscarPorNome(nome);
+
+        if(!resposta.length == 0){ //! = nula ou não definida
+            resp.status(404).send([]) //forma 2 de algo não encontrado
+        }
+        resp.send(resposta);
+    }
+    catch (err){
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+//:id é parametro deixa por ultimo a ordem dos ends points é importante
+server.get('/filme/:id', async (req, resp) => { 
+    try{
+        const { id } = req.params;
+        const resposta = await buscarPorID(id);
+
+        if(!resposta){
+            throw new Error('Filme Não Encontrado!!!')//forma um de algo não encontrado
+        }
+        resp.send(resposta);
+    }
+    catch (err){
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+
 
 export default server
