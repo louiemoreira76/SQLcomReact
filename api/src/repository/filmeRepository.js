@@ -19,7 +19,7 @@ export async function alterarImagem(imagem, id){
     `;
     
     const [resposta] = await conx.query(comando, [imagem, id]);
-    resposta.affectedRows // quantas linhas foram afetadas no DB, se retornar 1 certo se não errado
+    return resposta.affectedRows // quantas linhas foram afetadas no DB, se retornar 1 certo se não errado
 }
 
 ///////////////////////////////////////////////////
@@ -47,7 +47,7 @@ export async function buscarPorID(id){
     WHERE id_filme = ?`;
     const [linhas] = await conx.query(comando, [id]);
     return linhas[0];
-}
+};
 
 export async function buscarPorNome(nome){
     const comando = `
@@ -60,4 +60,28 @@ export async function buscarPorNome(nome){
     WHERE nm_filme like ?`;
     const [linhas] = await conx.query(comando, [`%${nome}%`]);
     return linhas[0];
+};
+
+
+export async function deletarFilme(id){
+    const comando =`
+    DELETE FROM tb_filmes
+        WHERE id_filme = ?`;
+    const [resposta] = await conx.query(comando, [id]);
+    return resposta.affectedRows;
+};
+
+
+export async function alterarFilme(id, filme){
+    const comando =`
+    UPDATE tb_filmes
+    SET nm_filme = 'O Kara',
+        ds_sinopse = 'Homem mais pika de todos',
+        vl_avaliacao = 3.2,
+        dt_lancamento = '2010/08/17',
+        bt_disponivel = true
+        id_usuario       usuario
+    WHERE   id_filme = 1;`
+    const [resposta] = await conx.query(comando, [filme.nome, filme.sinopse, filme.avaliacao, filme.lancamento, filme.disponivel,filme.usuario, id]);
+    return resposta.affectedRows;
 }

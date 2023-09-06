@@ -30,6 +30,10 @@ UPDATE tb_filmes
         bt_disponivel = true
 WHERE   id_filme = 1;
 
+-- remover filme
+DELETE FROM tb_filmes
+    WHERE id_filme = 1;
+
 --colsultar todos filmes 
 SELECT id_filme     id,
        nm_filme     nome,

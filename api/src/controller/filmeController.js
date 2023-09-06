@@ -1,4 +1,4 @@
-import { alterarImagem, inserirFilme, listarTodosFilmes, buscarPorID, buscarPorNome } from '../repository/filmeRepository.js';
+import { alterarImagem, inserirFilme, listarTodosFilmes, buscarPorID, buscarPorNome, deletarFilme, alterarFilme} from '../repository/filmeRepository.js';
 
 import { Router } from 'express';
 const server = Router();
@@ -22,7 +22,7 @@ server.post('/filme', async(req, resp) => {
         if(!filmeParaInserir.lancamento)
          throw new Error('Lançamento do filme inserido é obrigatorio');
 
-         if(!filmeParaInserir.disponivel)
+         if(filmeParaInserir.disponivel == undefined)
          throw new Error('Disponivel do filme inserido é obrigatorio'); 
 
          if(!filmeParaInserir.usuario)
@@ -108,6 +108,60 @@ server.get('/filme/:id', async (req, resp) => {
     }
 })
 
+server.delete('/filme/:id', async (req, resp) => {
+    try{
+        const { id } = req.params;
+
+        const resposta = await deletarFilme(id);
+
+        if(resposta != 1) // validação
+            throw new Error('Filme não pode ser removido!');
+
+        resp.status(204).send();
+    }
+    catch (err){
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
 
 
+server.put('/filme/:id', async (req, resp) => {
+    try{
+        const { id } = req.params;
+        const filme = req.body;
+
+        if(!filme.nome)
+            throw new Error('Nome do filme inserido é obrigatorio');
+
+        if(!filme.sinopse)
+        throw new Error('Sinopse do filme inserido é obrigatorio');
+
+        if(!filme.avaliacao)
+            throw new Error('Avaliação do filme inserido é obrigatorio');
+
+        if(!filme.lancamento)
+         throw new Error('Lançamento do filme inserido é obrigatorio');
+
+         if(filme.disponivel == undefined)
+         throw new Error('Disponivel do filme inserido é obrigatorio'); 
+
+         if(!filme.usuario)
+        throw new Error('Usuario não logado!')
+
+        const resposta = await alterarFilme(id, filme);
+
+        if(resposta != 1)
+        throw new Error('Filme não pode ser alterado!');
+        
+        else
+            resp.status(204).send();
+    }
+    catch (err){
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
 export default server
