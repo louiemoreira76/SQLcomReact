@@ -60,7 +60,7 @@ server.put('/filme/:id/imagem', upload.single('capa'), async (req, resp) => {
 })
 ///////////////
 
-server.get('/filme', async (req, resp) => { 
+server.get('/filme', async (req, resp) => { //não precisa de requisisão
     try{
         const resposta = await listarTodosFilmes();
         resp.send(resposta);
