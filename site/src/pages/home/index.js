@@ -7,7 +7,7 @@ import './index.scss'
 export default function Index() {
     return (
         <main className='page page-home'>
-            <Menu />
+            <Menu selecionado='home'/>
             <div className='container'>
                 <Cabecalho />
                 

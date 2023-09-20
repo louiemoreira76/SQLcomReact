@@ -31,7 +31,7 @@
         display: flex;
         flex-direction: column;
     }
-    .menu-items > div {
+    .menu-items > a {
         display: flex;
         align-items: center;
         
@@ -42,13 +42,37 @@
         transition: .3s;
         cursor: pointer;
     }
-    .menu-items > div:hover {
+    .menu-items > a:hover {
         background-color: #A028E6;
     }
 
-    .menu-items > div img {
+    .menu-items > a img {
         width: 27px;
         margin-right: 30px;
     }
 
+    .oi{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+        color: white;
+        font-size:large;
+        cursor: pointer;
+    }
+
+    .oi:hover {
+        background-color: #A028E6;
+    }
+
+    .oi > img{
+        width: 90px;
+        height: 50px;
+        padding-right: 30px;
+    }
+
+    .selecionado{
+        background-color: #A028E6;
+    }
 }
