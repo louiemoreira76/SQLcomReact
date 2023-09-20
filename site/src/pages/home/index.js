@@ -12,7 +12,7 @@ export default function Index() {
                 <Cabecalho />
                 
                 <div className='conteudo'>
-                    <img className='logo-estilizado' src='/assets/images/logo-styled.svg' alt='logo estilizado' />
+                    <img className='logo-estilizado' src='/assets/images/assistindo-um-filme.png' alt='logo estilizado' />
                 </div>
             </div>
         </main>

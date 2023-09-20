@@ -1,6 +1,8 @@
-import { login } from '../../apis/usuarioAPI';
+import { login } from '../../apis/usuarioAPI'; //apis
 
-import { useState, useRef } from 'react'; //useRef vai criaruma referencia para usar loading bar
+import storage from 'local-storage';
+
+import { useState, useRef, useEffect } from 'react'; //useRef vai criaruma referencia para usar loading bar
 import LoadingBar from 'react-top-loading-bar'
 
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +19,12 @@ export default function Index() {
     const navigate = useNavigate(); 
     const ref = useRef();
 
+    useEffect(() => {  //para que qnd o usuario já estiver logado ele vá direto para admin 
+        if (storage('usuario-logado')){
+            navigate('/admin');
+        }
+    }, [])
+
     async function entrarClick() { //axios faz uma chamada acicrona
     
         ref.current.continuousStart();
@@ -24,6 +32,8 @@ export default function Index() {
 
     try{
         const r = await login(email, senha);
+
+        storage('usuario-logado', r) //para armazenar no broser chama o storage passado 2 parametros = 1° nm da chave 2° valor da var
         
         setTimeout(() => { //ELA passa um tempo, e só vai executar essa função qnd bater no cronomento  
             navigate('/admin');
