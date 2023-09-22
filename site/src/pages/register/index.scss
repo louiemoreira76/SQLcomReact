@@ -41,6 +41,21 @@
         cursor: pointer;
     }
 
+    .upload-capa > img{
+        width: 60px;
+    }
+
+    #file{
+        visibility: hidden;
+        position: absolute;
+    }
+
+    #imagem-capa{
+        border-radius: 3px;
+        width: 200px;
+        height: 250px;
+    }
+
     .form-colums {
         display: flex;
         margin-left: 30px;

@@ -17,33 +17,37 @@ export default function Index() {
     const [avaliacao, setAvaliacao] = useState(0);
     const [lancamento, setLancamento] = useState('');
     const [disponivel, setDisponivel] = useState(false);
-    const [imagem, setImagem] = useState('');
+    const [imagem, setImagem] = useState();
 
     async function Salavarclick(){
         
         try{
+            if(!imagem)
+                throw new Error('Escolha a capa do filme');
+
             const usuario = storage('usuario-logado').id; ///pegando só ampo id do objeto usuario-logado
+            //console.log('Dados enviados para a API:', { nome, sinopse, avaliacao, disponivel, lancamento, usuario });
+            const filme = await CadastrarFilme(nome, avaliacao, lancamento, disponivel, sinopse, usuario);
 
-            console.log('Dados enviados para a API:', { nome, sinopse, avaliacao, disponivel, lancamento, usuario });
-
-            //console.log('Nome:', nome);
-            //console.log('Sinopse:', sinopse);
-            //console.log('Avaliação:', avaliacao);
-            //console.log('Lançamento:', lancamento);
-           //console.log('Disponível:', disponivel);
-           //console.log('Usuário:', usuario);
-
-            const r = await CadastrarFilme(nome, avaliacao, lancamento, disponivel, sinopse, usuario);
+            const ImagemF = await EnviarImagemF(filme.id, imagem);
 
             toast.success('Filme Cadastrado com sucesso📽️!');
         }
         catch (err) {
             if (err.response) {
-              toast.error(`Erro ${err.response.status}: ${err.response.data.erro}`);
+              toast.error(err.response.data.erro);
             } else {
-              toast('Erro desconhecido ao cadastrar o filme.');
+              toast.error(err.message);
             }
           }
+    }
+
+    function EscolherImagem(){ //para pegar o selecinador de arquivo na div intera
+        document.getElementById('file').click();
+    }
+
+    function mostarImagem(){
+        return URL.createObjectURL(imagem)
     }
 
     return (
@@ -58,8 +62,18 @@ export default function Index() {
 
                         <div className='form-colums'>
                             <div>
-                                <div className='upload-capa'>
-                                    <img src="/assets/images/icon-upload.svg" alt="" />
+                                <div className='upload-capa' onClick={EscolherImagem}>
+                                  
+                                  {//Renderização condicional
+                                    !imagem && //se imagem tiver nula ou undefined, então  aparece isso
+                                        <img src="/assets/images/upload-de-arquivo.png" alt="" />
+                                  }
+                                  {
+                                    imagem && // se tiver imagem, então exibia
+                                        <img id='imagem-capa' src={mostarImagem()} alt="" /> //estilazr para caber na div
+                                  }
+
+                                    <input type="file" id='file' onChange={e => setImagem(e.target.files[0])}/>
                                 </div>
                             </div>
                             <div>
