@@ -28,3 +28,16 @@ export async function EnviarImagemF(id, imagem){
     });
     return resposta.status //não tem conteudo ele retorna 204
 }
+
+
+export async function AlterarFilme(id, nome, avaliacao, lancamento, disponivel, sinopse, usuario) {
+    const resposta = await api.put(`/filme/${id}`, {
+        nome: nome,
+        sinopse: sinopse,
+        avaliacao: avaliacao,
+        disponivel: disponivel,
+        lancamento: lancamento,
+        usuario: usuario
+    })
+    return resposta.data; //lebrando que o data é o que a api da como respsota
+}

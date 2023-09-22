@@ -1,8 +1,8 @@
 import Menu from '../../components/menu';
 import Cabecalho from '../../components/cabecalho';
 
-import storage from 'local-storage'; //pegar o usuario
-import { CadastrarFilme, EnviarImagemF} from '../../apis/filmeAPI'; //APIS
+import storage, { set } from 'local-storage'; //pegar o usuario
+import { CadastrarFilme, EnviarImagemF, AlterarFilme} from '../../apis/filmeAPI'; //APIS
 
 import './index.scss';
 import { useState } from 'react';
@@ -18,6 +18,8 @@ export default function Index() {
     const [lancamento, setLancamento] = useState('');
     const [disponivel, setDisponivel] = useState(false);
     const [imagem, setImagem] = useState();
+    //alterar
+    const [id, setId] = useState(0);
 
     async function Salavarclick(){
         
@@ -26,12 +28,23 @@ export default function Index() {
                 throw new Error('Escolha a capa do filme');
 
             const usuario = storage('usuario-logado').id; ///pegando só ampo id do objeto usuario-logado
-            //console.log('Dados enviados para a API:', { nome, sinopse, avaliacao, disponivel, lancamento, usuario });
+
+            if (id === 0){
+                 //console.log('Dados enviados para a API:', { nome, sinopse, avaliacao, disponivel, lancamento, usuario });
             const filme = await CadastrarFilme(nome, avaliacao, lancamento, disponivel, sinopse, usuario);
 
             const ImagemF = await EnviarImagemF(filme.id, imagem);
-
+            setId(filme.id); //Vai alterar a variavel de estado por causa do ID FILME const [id, setId] = useState(1 ou 2...);
+            
             toast.success('Filme Cadastrado com sucesso📽️!');
+            }
+            else { //alterar
+                const alterar = await AlterarFilme(id, nome, avaliacao, lancamento, disponivel, sinopse, usuario);
+                const ImagemA = await EnviarImagemF(id, imagem);
+                toast.success('Filme Alterado com sucesso📽️!');
+            }
+
+           
         }
         catch (err) {
             if (err.response) {
@@ -48,6 +61,16 @@ export default function Index() {
 
     function mostarImagem(){
         return URL.createObjectURL(imagem)
+    }
+
+    function NovoClick(){
+        setId(0);
+        setNome('');
+        setSinopse('');
+        setAvaliacao(0);
+        setLancamento('');
+        setDisponivel(true);
+        setImagem();
     }
 
     return (
@@ -104,8 +127,9 @@ export default function Index() {
                                 <br />
                                 <div className='form-row'>
                                     <label></label>
-                                    <div className='btnSalvar'>
-                                        <button onClick={Salavarclick}>SALVAR</button>    
+                                    <div className='btnSalvar'>                 {/*CONDIÇAO TERNARI IF TERNERIA ? VERDADEIRO : FALSO*/}  
+                                        <button onClick={Salavarclick}> {id === 0 ? 'SALVAR' : 'ALTERAR' } </button> &nbsp; &nbsp;
+                                        <button onClick={NovoClick}>Novo</button>
                                     </div>
                                 </div>
                             </div>
