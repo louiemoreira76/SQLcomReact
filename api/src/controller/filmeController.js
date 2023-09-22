@@ -1,9 +1,10 @@
 import { alterarImagem, inserirFilme, listarTodosFilmes, buscarPorID, buscarPorNome, deletarFilme, alterarFilme} from '../repository/filmeRepository.js';
 
+import multer from 'multer'; // para conseguir enviar images ao DB
 import { Router } from 'express';
 const server = Router();
 
-import multer from 'multer';
+                                //tenta colocar dps a rota completa
 const upload = multer({dest: 'tools/image'}); //obejeto javasript '{}', dest é para onde vai subir os arquivos
 
 server.post('/filme', async(req, resp) => {

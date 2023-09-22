@@ -1,7 +1,7 @@
 import { conx } from "./connecion.js";
 
 export async function inserirFilme (filme){ //não nome, genero, avaliação etc pq é parametro de corpo inteiro
-    const comando = `INSERT INTO tb_filmes (id_filme, nm_filme, ds_sinopse, vl_avaliacao, dt_lancamento, bt_disponivel)
+    const comando = `INSERT INTO tb_filmes (id_usuario, nm_filme, ds_sinopse, vl_avaliacao, dt_lancamento, bt_disponivel)
 	                            VALUES (?, ?, ?, ?, ?, ?);`
 
     const [rensposta] = await conx.query(comando, [filme.usuario, filme.nome, filme.sinopse, filme.avaliacao, filme.lancamento, filme.disponivel]);
@@ -75,13 +75,13 @@ export async function deletarFilme(id){
 export async function alterarFilme(id, filme){
     const comando =`
     UPDATE tb_filmes
-    SET nm_filme = 'O Kara',
-        ds_sinopse = 'Homem mais pika de todos',
-        vl_avaliacao = 3.2,
-        dt_lancamento = '2010/08/17',
-        bt_disponivel = true
-        id_usuario       usuario
-    WHERE   id_filme = 1;`
+    SET nm_filme = ?,
+        ds_sinopse = ?,
+        vl_avaliacao = ?,
+        dt_lancamento = ?,
+        bt_disponivel = ?,
+        id_usuario =    ?
+    WHERE   id_filme = 1`
     const [resposta] = await conx.query(comando, [filme.nome, filme.sinopse, filme.avaliacao, filme.lancamento, filme.disponivel,filme.usuario, id]);
     return resposta.affectedRows;
 }

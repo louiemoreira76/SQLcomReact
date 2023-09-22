@@ -2,7 +2,7 @@ import { login } from '../../apis/usuarioAPI'; //apis
 
 import storage from 'local-storage';
 
-import { useState, useRef, useEffect } from 'react'; //useRef vai criaruma referencia para usar loading bar
+import { useState, useRef, useEffect } from 'react'; //useRef vai criar uma referencia para usar loading bar
 import LoadingBar from 'react-top-loading-bar'
 
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,7 @@ export default function Index() {
 
     async function entrarClick() { //axios faz uma chamada acicrona
     
-        ref.current.continuousStart();
+        ref.current.continuousStart(); ///barra de carrregamento
         setCarregando(true);
 
     try{

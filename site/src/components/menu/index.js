@@ -13,7 +13,7 @@ export default function Index(props) { //props pode ser chamdo em qualquer lugar
         navigate('/') //que é o login
     }
 
-    function verificarMenuSelecionado(menu){
+    function verificarMenuSelecionado(menu){ // scss esta roxo o selecionado
         if (menu === props.selecionado)
             return 'selecionado'   // que é oq cai dentro da função é o class selecionado
     
