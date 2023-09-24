@@ -2,9 +2,11 @@ import Menu from '../../components/menu'
 import Cabecalho from '../../components/cabecalho'
 
 import './index.scss'
-import {BuscarPorNomeFilmes, listarTodosFilmes} from '../../apis/filmeAPI'
+import {BuscarPorNomeFilmes, listarTodosFilmes , ExcluirFilme} from '../../apis/filmeAPI'
 import { useEffect, useState } from 'react'
 
+import { confirmAlert } from 'react-confirm-alert'; 
+import { toast } from 'react-toastify'
 
 export default function Index() {
 
@@ -32,6 +34,33 @@ export default function Index() {
     useEffect(() => {
         CarregarTodosFilmes();
     }, [])
+
+    async function RemoverFilme(id, nome){
+
+        confirmAlert({
+            title: 'Remover Filme',
+            message: `Você tem certeza que quer fazer isso? Excluir o filme ${nome}.`,
+            buttons: [
+              {
+                label: 'Sim',
+                onClick: async () => {
+                    const resposta = await ExcluirFilme(id, nome);
+                        if (filtro === "")
+                            CarregarTodosFilmes();
+
+                        if (filtro !== "")
+                            CarregarTodosFilmes();
+                        else
+                            filtrar();
+                            toast.dark("Filme removido💀")
+                }
+              },
+              {
+                label: 'Não'
+              }
+            ]
+          });
+    }
 
     return (
         <main className='page page-consultar'>
@@ -61,7 +90,7 @@ export default function Index() {
 
                         {/*para mapear um arry em uma tag ou bloco jsx usa o MAP; função anonima que recebe o item de parametro*/}
                         {filmes.map(item => (
-                            <tr key={item.id}> 
+                            <tr key={item.id}> {/*parar jsx saber direnciar no mapeamento*/}
                                 <td>{item.id}</td>
                                 <td>{item.nome}</td>
                                 <td>{item.avaliacao}</td>
@@ -70,7 +99,7 @@ export default function Index() {
                                 <td>
                                     <img id='lapis' src='/assets/images/icon-editar.png' alt='editar' />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <img id='lixo' src='/assets/images/lixo.png' alt='remover' />
+                                    <img id='lixo' src='/assets/images/lixo.png' alt='remover' onClick={() => RemoverFilme(item.id, item.nome)} />
                                 </td>
                         </tr>  
                         ))}
