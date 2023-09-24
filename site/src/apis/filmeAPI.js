@@ -41,3 +41,13 @@ export async function AlterarFilme(id, nome, avaliacao, lancamento, disponivel, 
     })
     return resposta.data; //lebrando que o data é o que a api da como respsota
 }
+
+export async function listarTodosFilmes(){
+    const resposta = await api.get('/filme');
+    return resposta.data
+}
+
+export async function BuscarPorNomeFilmes(nome){
+    const resposta = await api.get(`/filme/busca?nome=${nome}`);
+    return resposta.data
+}

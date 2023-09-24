@@ -10,7 +10,9 @@
         flex-grow: 1;
     }
 
-
+    #pro{
+        width: 50px;
+    }
 
     .conteudo {
         display: flex;
@@ -30,7 +32,7 @@
         padding: 20px 40px;
         border-radius: 15px;
         box-shadow: 1px 1px 5px rgb(220, 220, 220);
-        width: 40%;
+        width: 50rem;
         margin-top: 30px;
     }
     .caixa-busca input {
@@ -91,4 +93,10 @@
         visibility: visible;
     }
 
+    #lixo{
+        width: 50px;
+    }
+    #lapis{
+        width: 50px;
+    }
 }

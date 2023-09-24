@@ -83,10 +83,11 @@ server.get('/filme/busca', async (req, resp) => {
         const { nome } = req.query;
         const resposta = await buscarPorNome(nome);
 
-        if(!resposta.length == 0){ //! = nula ou não definida
+        if(resposta.length == 0){ //! = nula ou não definida
             resp.status(404).send([]) //forma 2 de algo não encontrado
         }
-        resp.send(resposta);
+        else
+            resp.send(resposta);
     }
     catch (err){
         resp.status(400).send({

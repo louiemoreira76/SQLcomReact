@@ -55,11 +55,12 @@ export async function buscarPorNome(nome){
     nm_filme         nome,
     vl_avaliacao     avaliacao,
     dt_lancamento    lancamento,
-    bt_disponivel    disponivel
+    bt_disponivel    disponivel,
+    id_usuario       usuario
     FROM tb_filmes
     WHERE nm_filme like ?`;
     const [linhas] = await conx.query(comando, [`%${nome}%`]);
-    return linhas[0];
+    return linhas;
 };
 
 

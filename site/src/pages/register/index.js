@@ -1,7 +1,7 @@
 import Menu from '../../components/menu';
 import Cabecalho from '../../components/cabecalho';
 
-import storage, { set } from 'local-storage'; //pegar o usuario
+import storage from 'local-storage'; //pegar o usuario
 import { CadastrarFilme, EnviarImagemF, AlterarFilme} from '../../apis/filmeAPI'; //APIS
 
 import './index.scss';
