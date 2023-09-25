@@ -69,6 +69,10 @@ export default function Index() {
         navigate(`/admin/alterar/${id}`); // para ir para pagina de editar filme
     }
 
+    function abrirDetalhes (id){
+        navigate(`/admin/detalhe/${id}`)
+    }
+
     return (
         <main className='page page-consultar'>
             <Menu selecionado='consultar'/>
@@ -97,17 +101,20 @@ export default function Index() {
 
                         {/*para mapear um arry em uma tag ou bloco jsx usa o MAP; função anonima que recebe o item de parametro*/}
                         {filmes.map(item => (
-                            <tr key={item.id}> {/*parar jsx saber direnciar no mapeamento*/}
-                                <td>{item.id}</td>
+                            <tr key={item.id} onClick={() => abrirDetalhes(item.id)}>
+                                <td>{item.id}</td> {/*parar jsx saber direnciar no mapeamento key={item.id}*/}
                                 <td>{item.nome}</td>
                                 <td>{item.avaliacao}</td>
                                 <td>{item.lancamento.substr(0, 10)}</td> {/*substr(0, 10) esse */}
                                 <td>{item.disponivel ? 'Sim' : 'Não'}</td>  {/*não se retorna valor boleno no jsx ent faça isso*/}
                                 <td>
-                                    <img id='lapis' src='/assets/images/icon-editar.png' alt='editar' onClick={() => editarFilme(item.id)}/>
+                                    <img id='lapis' src='/assets/images/icon-editar.png' alt='editar' 
+                                    onClick={e => { e.stopPropagation(); editarFilme(item.id) } }/>
+
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <img id='lixo' src='/assets/images/lixo.png' alt='remover' onClick={() => RemoverFilme(item.id, item.nome)} />
-                                </td>
+                                    <img id='lixo' src='/assets/images/lixo.png' alt='remover' 
+                                    onClick={e => { e.stopPropagation(); RemoverFilme(item.id, item.nome) } } />{/*stopPropagation inpede os onclick da tag mae*/}
+                                </td>                  {/*toda a função anonima com mais de duas linhas abre para agrupar{}*/}
                         </tr>  
                         ))}
                             <tr>
