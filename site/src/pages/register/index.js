@@ -2,14 +2,14 @@ import Menu from '../../components/menu';
 import Cabecalho from '../../components/cabecalho';
 
 import storage from 'local-storage'; //pegar o usuario
-import { CadastrarFilme, EnviarImagemF, AlterarFilme} from '../../apis/filmeAPI'; //APIS
+import { CadastrarFilme, EnviarImagemF, AlterarFilme, BuscarFilmeID, BuscarImagem} from '../../apis/filmeAPI'; //APIS
 
 import './index.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { toast } from 'react-toastify';
 
-
+import { useParams } from 'react-router-dom' //parametros de rota para o alterar filme no consultar
 
 export default function Index() {
     const [nome, setNome] = useState('');    //value={nome} se vincula ao input e => setNome(e.target.value) e aqui pega esse valor
@@ -18,9 +18,30 @@ export default function Index() {
     const [lancamento, setLancamento] = useState('');
     const [disponivel, setDisponivel] = useState(false);
     const [imagem, setImagem] = useState();
-    //alterar
+    //alterar na hora do cadastro
     const [id, setId] = useState(0);
 
+    ///   
+    const { idParam } = useParams();
+
+    useEffect(() => { //para qnd a pagina abrir 
+        if (idParam){   //se tiver algo no idParam
+            carregarFilme(); //chama essa função e se tiver sido passo o id param
+        }
+    }, [])
+
+    async function carregarFilme(){
+        const resposta = await BuscarFilmeID(idParam);
+        setNome(resposta.nome);
+        setSinopse(resposta.sinopse);
+        setAvaliacao(resposta.avaliacao);
+        setLancamento(resposta.lancamento.substr(0, 10));
+        setDisponivel(resposta.disponivel);
+
+        setId(resposta.id);
+        setImagem(resposta.imagem);
+    } 
+    ////
     async function Salavarclick(){
         
         try{
@@ -39,8 +60,11 @@ export default function Index() {
             toast.success('Filme Cadastrado com sucesso📽️!');
             }
             else { //alterar
-                const alterar = await AlterarFilme(id, nome, avaliacao, lancamento, disponivel, sinopse, usuario);
-                const ImagemA = await EnviarImagemF(id, imagem);
+                await AlterarFilme(id, nome, avaliacao, lancamento, disponivel, sinopse, usuario);
+
+                if (typeof(imagem) == 'object')
+                    await EnviarImagemF(id, imagem);
+                
                 toast.success('Filme Alterado com sucesso📽️!');
             }
 
@@ -58,9 +82,14 @@ export default function Index() {
     function EscolherImagem(){ //para pegar o selecinador de arquivo na div intera
         document.getElementById('file').click();
     }
-
+    //no alterar
     function mostarImagem(){
-        return URL.createObjectURL(imagem)
+        if (typeof (imagem) == 'object') {
+        return URL.createObjectURL(imagem);
+        }
+        else{
+            return BuscarImagem(imagem)
+        }
     }
 
     function NovoClick(){

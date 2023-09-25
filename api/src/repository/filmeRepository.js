@@ -40,9 +40,12 @@ export async function buscarPorID(id){
     const comando = `
     SELECT id_filme     id,
     nm_filme         nome,
+    ds_sinopse       sinopse,
+    img_filme        imagem,   
     vl_avaliacao     avaliacao,
     dt_lancamento    lancamento,
-    bt_disponivel    disponivel
+    bt_disponivel    disponivel,
+    id_usuario       usuario
     FROM tb_filmes
     WHERE id_filme = ?`;
     const [linhas] = await conx.query(comando, [id]);

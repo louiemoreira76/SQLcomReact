@@ -18,6 +18,8 @@ export default function Routess(){
                 <Route path='/admin/consultar' element={<Consultar />} />
                 <Route path='/admin/consultarCard' element={<ConsultarCard />} />
                 <Route path='/admin/detalhe' element={<Detalhe />} />
+                
+                <Route path='/admin/alterar/:idParam' element={<Cadastrar />} /> {/*Parametro de rota*/}
             </Routes>
         </BrowserRouter>
     )

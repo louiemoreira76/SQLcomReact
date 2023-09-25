@@ -8,7 +8,11 @@ import { useEffect, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert'; 
 import { toast } from 'react-toastify'
 
+import { useNavigate } from 'react-router-dom'
+
 export default function Index() {
+
+    const navigate = useNavigate();
 
     const [filmes, setFilmes] = useState([]);
     const [filtro, setFiltro] = useState('');
@@ -61,6 +65,9 @@ export default function Index() {
             ]
           });
     }
+    function editarFilme (id){
+        navigate(`/admin/alterar/${id}`); // para ir para pagina de editar filme
+    }
 
     return (
         <main className='page page-consultar'>
@@ -97,7 +104,7 @@ export default function Index() {
                                 <td>{item.lancamento.substr(0, 10)}</td> {/*substr(0, 10) esse */}
                                 <td>{item.disponivel ? 'Sim' : 'Não'}</td>  {/*não se retorna valor boleno no jsx ent faça isso*/}
                                 <td>
-                                    <img id='lapis' src='/assets/images/icon-editar.png' alt='editar' />
+                                    <img id='lapis' src='/assets/images/icon-editar.png' alt='editar' onClick={() => editarFilme(item.id)}/>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <img id='lixo' src='/assets/images/lixo.png' alt='remover' onClick={() => RemoverFilme(item.id, item.nome)} />
                                 </td>

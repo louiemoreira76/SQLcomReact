@@ -56,3 +56,14 @@ export async function ExcluirFilme(id){
     const resposta = await api.delete(`/filme/${id}`);
     return resposta.status;
 }
+
+export async function BuscarFilmeID(id){
+    const resposta = await api.get(`/filme/${id}`);
+    return resposta.data;
+}
+
+export function BuscarImagem(imagem){
+    console.log(api.getUri())
+    return `${api.getUri()}/${imagem}`
+    // http://localhost:5000/tools\\capasFilmes\\07824752478hh0yfbfy3uhyhyfuh
+}
